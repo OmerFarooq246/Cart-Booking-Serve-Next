@@ -3,10 +3,16 @@ import { mongoConnect } from "@/libs/mongodb";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "GET"){
-        if (req.query['hub.mode'] == 'subscribe' && req.query['hub.verify_token'] === process.env.VERIFY_TOKEN!)
-            res.status(200).send(req.query['hub.challenge']);
-        else
-            res.status(400).json({ name: "Invalid request" });
+        try{
+            if (req.query['hub.mode'] == 'subscribe' && req.query['hub.verify_token'] == process.env.VERIFY_TOKEN)
+                res.status(200).send(req.query['hub.challenge'])
+            else
+                res.status(400).json({ name: "Invalid request" })
+        }
+        catch (error){
+            console.log("error in webook GET: ", error)
+            res.status(500).json({error: `error in webook GET: ${error}`})
+        }
     }
 
     if (req.method === "POST"){

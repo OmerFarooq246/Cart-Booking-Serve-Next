@@ -1,15 +1,17 @@
 import { MongoClient } from "mongodb";
 
-declare global {
-    var _mongoClient: MongoClient | undefined
-}
+// declare global {
+//     var _mongoClient: Promise<MongoClient> | MongoClient | undefined;
+// }
+
+let client: MongoClient | undefined
 
 export async function mongoConnect(){
     try{
         if (process.env.NODE_ENV === "development"){
-            if (!global._mongoClient)
-                global._mongoClient = await MongoClient.connect(process.env.MONGO_URI!)
-            return global._mongoClient
+            if (!client)
+                client = await MongoClient.connect(process.env.MONGO_URI!)
+            return client
         }
         else{
             const client = await MongoClient.connect(process.env.MONGO_URI!)
