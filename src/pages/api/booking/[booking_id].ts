@@ -16,15 +16,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 if (booking.status === "used")
                     return {"status": 409, "error": "Booking is already used"}
                 else if (booking.status === "active"){
-                    const res = await Bookings?.updateOne({ _id: new ObjectId(id) }, { $set: { status: "used" } })
-                    console.log("res:", res)
-                    return {"status": 200, "message": "Booking status set to used"}
+                    const result = await Bookings?.updateOne({ _id: new ObjectId(id) }, { $set: { status: "used" } })
+                    console.log("result:", result)
+                    res.status(200).json( {"message": "Booking status set to used"} )
                 }
                 else
-                    return {"status": 409, "error": "Booking has an unknown status"}
+                    res.status(409).json({"error": "Booking has an unknown status"})
             }
             else
-                return {"status": 404, "error": "No booking found for the requested id"}
+                res.status(404).json({"error": "No booking found for the requested id"})
         }
         catch (error){
             console.log("error in booking endpoint: ", error)
