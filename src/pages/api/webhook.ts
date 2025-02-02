@@ -32,7 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 else if (type === "location")
                     msg = body?.location
                 else if (type === "interactive"){
-                    if (body?.interactive === "list_reply")
+                    if (body?.interactive.type === "list_reply")
                         msg = body?.interactive?.list_reply?.id
                     else
                         msg = body?.interactive?.button_reply?.id
