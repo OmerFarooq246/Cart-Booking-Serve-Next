@@ -9,6 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             const Bookings = client?.db("Cart_Booking").collection("Bookings")
             const { booking_id } = req.query
             const id = typeof booking_id === "string" ? booking_id : undefined
+            console.log("booking_id: ", booking_id)
             
             const booking = await Bookings?.findOne({ _id : new ObjectId(id) })
             if (booking){
