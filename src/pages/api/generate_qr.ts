@@ -1,5 +1,6 @@
 import QRCode from 'qrcode';
 import path from 'path';
+import fs from 'fs';
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -11,6 +12,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     const fileName = `${booking_id}.png`
                     const img_path = path.join(process.cwd(), 'public/qr_codes', fileName);
                     const data = `${process.env.SERVE}/api/booking?booking_id=${booking_id}`
+
+                     // Check if the folder exists, if not, create it
+                    if (!fs.existsSync(path.join(process.cwd(), 'public/qr_codes'))) {
+                        fs.mkdirSync(path.join(process.cwd(), 'public/qr_codes'), { recursive: true });
+                    }
+
                     await QRCode.toFile(img_path, data, {
                         width: 300,
                         errorCorrectionLevel: 'H',
