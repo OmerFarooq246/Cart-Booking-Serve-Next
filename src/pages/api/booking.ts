@@ -19,7 +19,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 else if (booking.status === "active"){
                     const result = await Bookings?.updateOne({ _id: new ObjectId(id) }, { $set: { status: "used" } })
                     console.log("result:", result)
-                    res.status(200).json( {"message": "Booking status set to used"} )
+                    const res_json = {
+                        "message": "Booking status set to used",
+                        "booking details": booking
+                    }
+                    res.status(200).json(res_json)
                 }
                 else
                     res.status(409).json({"error": "Booking has an unknown status"})
