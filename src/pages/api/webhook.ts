@@ -19,7 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         try {
             const client = await mongoConnect()
             const Messages = client?.db("Cart_Booking").collection("Messages")
-            console.log("req.body.entry[0].changes[0]: ", req.body.entry[0].changes[0])
+            console.log("req.body: ", JSON.stringify(req.body))
 
             if (req?.body?.entry[0]?.changes[0]?.value?.messages){
                 const body = req?.body?.entry[0]?.changes[0]?.value?.messages[0]
