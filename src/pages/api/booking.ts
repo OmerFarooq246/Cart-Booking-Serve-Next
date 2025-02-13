@@ -21,7 +21,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     console.log("result:", result)
                     const res_json = {
                         "message": "Booking status set to used",
-                        "booking details": booking
                     }
                     res.status(200).json(res_json)
                 }
