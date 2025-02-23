@@ -15,12 +15,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             if (booking){
                 console.log("booking:", booking)
                 if (booking.status === "used")
-                    res.status(409).json({error: "Booking is already used"})
+                    res.status(409).json({error: "الحجز مستخدم مسبقًا."})
                 else if (booking.status === "active"){
                     const result = await Bookings?.updateOne({ _id: new ObjectId(id) }, { $set: { status: "used" } })
                     console.log("result:", result)
                     const res_json = {
-                        "message": "Booking status set to used",
+                        "message": "تم تغيير حالة الحجز إلى مستخدم.",
                     }
                     res.status(200).json(res_json)
                 }
