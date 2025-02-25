@@ -3,7 +3,7 @@ import { mongoConnect } from "@/libs/mongodb";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "GET"){
-        console.log("req of get: ", req)
+        console.log("req.query of get: ", req.query)
         try{
             if (req.query['hub.mode'] == 'subscribe' && req.query['hub.verify_token'] == process.env.VERIFY_TOKEN)
                 res.status(200).send(req.query['hub.challenge'])
