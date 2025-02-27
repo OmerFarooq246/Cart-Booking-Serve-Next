@@ -22,7 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                         width: 300,
                         errorCorrectionLevel: 'H',
                     });
-                    const qrUrl = `/qr_codes/` + fileName;
+                    const qrUrl = `qr_codes/` + fileName;
                     return res.status(200).json({ qrUrl });
                 }
                 catch (error){
